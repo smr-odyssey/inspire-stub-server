@@ -1,0 +1,21 @@
+{
+  "name": "temp-file-storage",
+  "version": "0.0.0",
+  "description": "A temporary file storage server.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smr-odyssey/temp-file-storage.git"
+  },
+  "author": "Steven Rogers <steven.rogers@theoddysseyonline.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smr-odyssey/temp-file-storage/issues"
+  },
+  "homepage": "https://github.com/smr-odyssey/temp-file-storage#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "multer": "^1.1.0",
+    "node-sha1": "^1.0.1"
+  }
+}
