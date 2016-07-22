@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
 	destination: (req, file, callback) => {
 		callback(null, './store');
 	},
-	filename: function (req, file, callback) {
+	filename: (req, file, callback) => {
 		const {originalname} = file;
 		const ext = (originalname.match(/\.(.+)$/i) || ['', 'unknown'])[1];
 		const filename = sha1(`${Date.now()} ${originalname} ${ext}`);
@@ -25,24 +25,33 @@ const app = express();
 
 app.use('/store', express.static(__dirname + '/store'));
 
-app.all('/', function(req, res, next) {
+app.all('/', (req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 	next();
 });
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 	next();
 });
 
 app.post('/upload', (req, res) => {
-	upload(req,res,function(err) {
-		if(err) {
-			return res.end('Error uploading file.');
+	upload(req, res, err => {
+		if (err) {
+			res.status(500);
+			return res.end(message);
 		}
-		res.end('File is uploaded');
+
+		const file = req.file;
+		const path = file.path;
+		const payload = {
+			filepath: `http://localhost:3001/${path}`
+		};
+
+		res.status(200);
+		res.json(payload);
 	});
 });
 
