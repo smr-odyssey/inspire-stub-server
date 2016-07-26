@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require('multer');
 const sha1 = require('node-sha1');
+const axios = require('axios');
 
 /*****************************************************************************/
 
@@ -37,11 +38,11 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.post('/upload', (req, res) => {
+app.get('/upload', (req, res) => {
 	upload(req, res, err => {
 		if (err) {
 			res.status(500);
-			return res.end(message);
+			return res.end();
 		}
 
 		const file = req.file;
@@ -52,6 +53,22 @@ app.post('/upload', (req, res) => {
 
 		res.status(200);
 		res.json(payload);
+	});
+});
+
+app.get('/twitter/oembed/', (req, res) => {
+	const twitterAPI = 'https://publish.twitter.com/oembed';
+	const twitterURL = encodeURIComponent(req.query.url);
+	const apiCall = `${twitterAPI}?url=${twitterURL}`;
+
+	axios.get(apiCall)
+	.then(payload => {
+		res.status(200);
+		res.json(payload.data);
+	})
+	.catch(err => {
+		res.status(500);
+		res.json(err);
 	});
 });
 
