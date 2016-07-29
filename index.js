@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.get('/upload', (req, res) => {
+app.post('/upload', (req, res) => {
 	upload(req, res, err => {
 		if (err) {
 			res.status(500);
