@@ -1,6 +1,6 @@
 # tempory-file-storage-server
 
-An express server for stubbing out the API needs of the new front-end-powered creator system.
+An express server for stubbing out the API needs of the new front-end-powered creator system. **This is not a replacement for the real thing.**
 
 # Installation
 
